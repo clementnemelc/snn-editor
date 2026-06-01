@@ -15160,25 +15160,16 @@ const MULTIPLIER_MODEL_DATA = {
 const CASES = [
     {
         id: "full_adder",
-        name: "Full Adder (全加器演化網路)",
-        tag: "Evolved Logic",
-        desc: "將 A, B, Cin 三個脈衝輸入映射至 Sum, Cout 二個輸出的 SNN 演化網路。包含 2 個隱藏層節點（1個興奮性、1個抑制性），準確率達到 100% 收斂。",
         path: "./models/full_adder.json",
         model: FULL_ADDER_MODEL_DATA
     },
     {
         id: "layer6_layer8",
-        name: "Layer 6 to Layer 8 Spike Map (皮層傳播對齊網路)",
-        tag: "Cortical Mapping",
-        desc: "模擬大腦皮層 L6 到 L8 脈衝傳遞映射的自適應演化網路。具備 9 個輸入通道及 4 個輸出解碼通道，歷經多次結構演化出 10 個隱藏神經元，達成完美配對。",
         path: "./models/layer6_layer8_evolved.json",
         model: L6_L8_MODEL_DATA
     },
     {
         id: "multiplier_4x4",
-        name: "4x4 Multiplier (4x4 乘法器演化網路)",
-        tag: "High-Capacity SNN",
-        desc: "二進位 4x4 乘法器 SNN 演化模型。由 8 個輸入編碼神經元、56 個演化隱藏神經元以及 8 個輸出神經元構成，總計 568 條突觸連線，展現極高運算容量。",
         path: "./models/multiplier_4x4_evolved.json",
         model: MULTIPLIER_MODEL_DATA
     }
@@ -15256,25 +15247,27 @@ function CaseLibraryModal({ open, onClose, onSelect, lang }) {
                                     className: "flex justify-between items-center",
                                     children: [
                                         i.jsx("span", {
-                                            className: "text-xs font-semibold text-foreground group-hover:text-[hsl(var(--primary))] transition-colors",
-                                            children: c.name
+                                            className: "text-xs font-bold text-foreground group-hover:text-[hsl(var(--primary))] transition-colors uppercase tracking-wide",
+                                            children: c.id.replace("_", " ")
                                         }),
                                         i.jsx("span", {
                                             className: "px-2 py-0.5 rounded-full text-[9px] font-medium case-badge",
-                                            children: c.tag
+                                            children: c.model.metadata.name
                                         })
                                     ]
                                 }),
-                                i.jsx("p", {
-                                    className: "text-[10px] text-muted-foreground leading-relaxed",
-                                    children: c.desc
-                                }),
                                 i.jsxs("div", {
-                                    className: "flex gap-3 text-[9px] text-muted-foreground/60 border-t border-[hsl(var(--border))]/50 pt-2 mt-1",
+                                    className: "grid grid-cols-3 gap-2 text-[10px] text-muted-foreground pt-1.5 border-t border-[hsl(var(--border))]/50 mt-1",
                                     children: [
-                                        i.jsxs("span", { children: ["Layers: ", c.model.metadata.layers_count] }),
-                                        i.jsxs("span", { children: ["Neurons: ", c.model.metadata.nodes_count] }),
-                                        i.jsxs("span", { children: ["Synapses: ", c.model.metadata.synapses_count] })
+                                        i.jsxs("div", {
+                                            children: [i.jsx("span", { className: "block text-[9px] opacity-60 uppercase", children: "Layers" }), i.jsx("span", { className: "font-semibold text-foreground font-mono", children: c.model.metadata.layers_count })]
+                                        }),
+                                        i.jsxs("div", {
+                                            children: [i.jsx("span", { className: "block text-[9px] opacity-60 uppercase", children: "Neurons" }), i.jsx("span", { className: "font-semibold text-foreground font-mono", children: c.model.metadata.nodes_count })]
+                                        }),
+                                        i.jsxs("div", {
+                                            children: [i.jsx("span", { className: "block text-[9px] opacity-60 uppercase", children: "Synapses" }), i.jsx("span", { className: "font-semibold text-foreground font-mono", children: c.model.metadata.synapses_count })]
+                                        })
                                     ]
                                 })
                             ]
