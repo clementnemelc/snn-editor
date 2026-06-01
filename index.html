@@ -15199,78 +15199,109 @@ const CASES = [
 function CaseLibraryModal({ open, onClose, onSelect, lang }) {
     if (!open) return null;
     const isZh = lang === "zh";
-    return i.jsx("div", {
-        className: "fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm",
+    return i.jsxs("div", {
+        className: "fixed inset-0 z-50 flex items-center justify-center case-modal-overlay",
         onClick: onClose,
-        children: i.jsxs("div", {
-            className: "bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-xl shadow-2xl w-[450px] p-6 max-h-[90vh] flex flex-col gap-4 animate-in fade-in-0 zoom-in-95 duration-200",
-            onClick: e => e.stopPropagation(),
-            children: [
-                i.jsxs("div", {
-                    className: "flex justify-between items-center border-b border-[hsl(var(--border))] pb-3 shrink-0",
-                    children: [
-                        i.jsx("h3", {
-                            className: "text-sm font-bold text-[hsl(var(--primary))] uppercase tracking-widest",
-                            children: isZh ? "案例庫 / Model Case Library" : "Model Case Library"
-                        }),
-                        i.jsx("button", {
-                            onClick: onClose,
-                            className: "text-muted-foreground hover:text-foreground text-lg font-bold leading-none p-1 transition-colors",
-                            children: "×"
-                        })
-                    ]
-                }),
-                i.jsx("p", {
-                    className: "text-xs text-muted-foreground",
-                    children: isZh ? "選擇並載入內建的 SNN 演化範例模型。這會覆蓋目前的畫布結構。" : "Select and load a pre-trained SNN example model. This will overwrite the current canvas structure."
-                }),
-                i.jsx("div", {
-                    className: "flex-1 overflow-y-auto pr-1 space-y-3 max-h-[350px] scrollbar-thin",
-                    children: CASES.map(c => i.jsxs("div", {
-                        className: "flex flex-col gap-2 p-3.5 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--muted))]/30 hover:bg-[hsl(var(--muted))]/70 hover:border-[hsl(var(--primary))]/40 transition-all cursor-pointer group",
-                        onClick: () => {
-                            onSelect(c);
-                            onClose();
-                        },
+        children: [
+            i.jsx("style", {
+                children: `
+                    .case-modal-overlay {
+                        background-color: rgba(0, 0, 0, 0.65) !important;
+                        backdrop-filter: blur(4px) !important;
+                        -webkit-backdrop-filter: blur(4px) !important;
+                    }
+                    .case-modal-content {
+                        width: 450px !important;
+                        max-width: 95vw !important;
+                        padding: 24px !important;
+                        max-height: 90vh !important;
+                    }
+                    .case-card {
+                        background-color: hsl(var(--muted) / 0.3) !important;
+                        border: 1px solid hsl(var(--border)) !important;
+                        transition: all 0.2s ease-in-out !important;
+                    }
+                    .case-card:hover {
+                        background-color: hsl(var(--muted) / 0.7) !important;
+                        border-color: hsl(var(--primary) / 0.6) !important;
+                    }
+                    .case-badge {
+                        background-color: hsl(var(--primary) / 0.1) !important;
+                        color: hsl(var(--primary)) !important;
+                        border: 1px solid hsl(var(--primary) / 0.2) !important;
+                    }
+                `
+            }),
+            i.jsxs("div", {
+                className: "bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-xl shadow-2xl flex flex-col gap-4 animate-in fade-in-0 zoom-in-95 duration-200 case-modal-content",
+                onClick: e => e.stopPropagation(),
+                children: [
+                    i.jsxs("div", {
+                        className: "flex justify-between items-center border-b border-[hsl(var(--border))] pb-3 shrink-0",
                         children: [
-                            i.jsxs("div", {
-                                className: "flex justify-between items-center",
-                                children: [
-                                    i.jsx("span", {
-                                        className: "text-xs font-semibold text-foreground group-hover:text-[hsl(var(--primary))] transition-colors",
-                                        children: c.name
-                                    }),
-                                    i.jsx("span", {
-                                        className: "px-2 py-0.5 rounded-full text-[9px] font-medium bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] border border-[hsl(var(--primary))]/20",
-                                        children: c.tag
-                                    })
-                                ]
+                            i.jsx("h3", {
+                                className: "text-sm font-bold text-[hsl(var(--primary))] uppercase tracking-widest",
+                                children: isZh ? "案例庫 / Model Case Library" : "Model Case Library"
                             }),
-                            i.jsx("p", {
-                                className: "text-[10px] text-muted-foreground leading-relaxed",
-                                children: c.desc
-                            }),
-                            i.jsxs("div", {
-                                className: "flex gap-3 text-[9px] text-muted-foreground/60 border-t border-[hsl(var(--border))]/50 pt-2 mt-1",
-                                children: [
-                                    i.jsxs("span", { children: ["Layers: ", c.model.metadata.layers_count] }),
-                                    i.jsxs("span", { children: ["Neurons: ", c.model.metadata.nodes_count] }),
-                                    i.jsxs("span", { children: ["Synapses: ", c.model.metadata.synapses_count] })
-                                ]
+                            i.jsx("button", {
+                                onClick: onClose,
+                                className: "text-muted-foreground hover:text-foreground text-lg font-bold leading-none p-1 transition-colors",
+                                children: "×"
                             })
                         ]
-                    }, c.id))
-                }),
-                i.jsx("div", {
-                    className: "flex justify-end border-t border-[hsl(var(--border))] pt-3 shrink-0",
-                    children: i.jsx("button", {
-                        onClick: onClose,
-                        className: "px-3.5 py-1.5 rounded bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] hover:bg-[hsl(var(--muted))] text-xs font-semibold transition-all active:scale-95",
-                        children: isZh ? "取消" : "Cancel"
+                    }),
+                    i.jsx("p", {
+                        className: "text-xs text-muted-foreground",
+                        children: isZh ? "選擇並載入內建的 SNN 演化範例模型。這會覆蓋目前的畫布結構。" : "Select and load a pre-trained SNN example model. This will overwrite the current canvas structure."
+                    }),
+                    i.jsx("div", {
+                        className: "flex-1 overflow-y-auto pr-1 space-y-3 max-h-[350px] scrollbar-thin",
+                        children: CASES.map(c => i.jsxs("div", {
+                            className: "flex flex-col gap-2 p-3.5 rounded-lg border border-[hsl(var(--border))] transition-all cursor-pointer group case-card",
+                            onClick: () => {
+                                onSelect(c);
+                                onClose();
+                            },
+                            children: [
+                                i.jsxs("div", {
+                                    className: "flex justify-between items-center",
+                                    children: [
+                                        i.jsx("span", {
+                                            className: "text-xs font-semibold text-foreground group-hover:text-[hsl(var(--primary))] transition-colors",
+                                            children: c.name
+                                        }),
+                                        i.jsx("span", {
+                                            className: "px-2 py-0.5 rounded-full text-[9px] font-medium case-badge",
+                                            children: c.tag
+                                        })
+                                    ]
+                                }),
+                                i.jsx("p", {
+                                    className: "text-[10px] text-muted-foreground leading-relaxed",
+                                    children: c.desc
+                                }),
+                                i.jsxs("div", {
+                                    className: "flex gap-3 text-[9px] text-muted-foreground/60 border-t border-[hsl(var(--border))]/50 pt-2 mt-1",
+                                    children: [
+                                        i.jsxs("span", { children: ["Layers: ", c.model.metadata.layers_count] }),
+                                        i.jsxs("span", { children: ["Neurons: ", c.model.metadata.nodes_count] }),
+                                        i.jsxs("span", { children: ["Synapses: ", c.model.metadata.synapses_count] })
+                                    ]
+                                })
+                            ]
+                        }, c.id))
+                    }),
+                    i.jsx("div", {
+                        className: "flex justify-end border-t border-[hsl(var(--border))] pt-3 shrink-0",
+                        children: i.jsx("button", {
+                            onClick: onClose,
+                            className: "px-3.5 py-1.5 rounded bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] hover:bg-[hsl(var(--muted))] text-xs font-semibold transition-all active:scale-95",
+                            children: isZh ? "取消" : "Cancel"
+                        })
                     })
-                })
-            ]
-        })
+                ]
+            })
+        ]
     });
 }
 
