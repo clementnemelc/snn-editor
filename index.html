@@ -8469,21 +8469,24 @@ function Ef(u, v, c, g) {
 
 
 // --- SNN CASE LIBRARY DYNAMIC LOADER ---
-// Models are fetched at runtime from models/manifest.json
-// To add a new model: put JSON in /models/, add filename to manifest.json, push to GitHub.
+// Models are auto-discovered via GitHub Contents API.
+// To add a new model: simply push the JSON file to /models/ on GitHub. No other steps needed.
+const GITHUB_REPO = 'clementnemelc/snn-editor';
+const GITHUB_API_URL = 'https://api.github.com/repos/' + GITHUB_REPO + '/contents/models';
 let CASES = [];
 
 async function loadCaseLibrary() {
     try {
-        const manifestRes = await fetch('./models/manifest.json');
-        if (!manifestRes.ok) throw new Error('manifest.json not found');
-        const filenames = await manifestRes.json();
-        const loaded = await Promise.all(filenames.map(async (filename) => {
-            const res = await fetch('./models/' + filename);
-            if (!res.ok) throw new Error('Failed to fetch ' + filename);
+        const apiRes = await fetch(GITHUB_API_URL);
+        if (!apiRes.ok) throw new Error('GitHub API error: ' + apiRes.status);
+        const files = await apiRes.json();
+        const jsonFiles = files.filter(f => f.type === 'file' && f.name.endsWith('.json') && f.name !== 'manifest.json');
+        const loaded = await Promise.all(jsonFiles.map(async (file) => {
+            const res = await fetch(file.download_url);
+            if (!res.ok) throw new Error('Failed to fetch ' + file.name);
             const model = await res.json();
-            const id = filename.replace(/\.json$/, '');
-            return { id, path: './models/' + filename, model };
+            const id = file.name.replace(/\.json$/, '');
+            return { id, path: file.download_url, model };
         }));
         CASES = loaded;
     } catch (e) {
@@ -8502,12 +8505,13 @@ function CaseLibraryModal({ open, onClose, onSelect, lang }) {
     React.useEffect(() => {
         if (!open) return;
         setLoading(true);
-        fetch('./models/manifest.json')
+        fetch('https://api.github.com/repos/clementnemelc/snn-editor/contents/models')
             .then(r => r.json())
-            .then(filenames => Promise.all(filenames.map(async (filename) => {
-                const res = await fetch('./models/' + filename);
+            .then(files => files.filter(f => f.type === 'file' && f.name.endsWith('.json') && f.name !== 'manifest.json'))
+            .then(jsonFiles => Promise.all(jsonFiles.map(async (file) => {
+                const res = await fetch(file.download_url);
                 const model = await res.json();
-                return { id: filename.replace(/.json$/, ''), path: './models/' + filename, model };
+                return { id: file.name.replace(/\.json$/, ''), path: file.download_url, model };
             })))
             .then(loaded => { setCases(loaded); setLoading(false); })
             .catch(e => { console.error('[CaseLibrary] Load error:', e); setLoading(false); });
