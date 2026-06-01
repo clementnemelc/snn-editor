@@ -73,7 +73,7 @@
             "id": "e_L0_1_to_L2_0",
             "source": "L0_1",
             "target": "L2_0",
-            "weight": 0.38,
+            "weight": 0.6,
             "delay": 2,
             "sign": 1
         },
