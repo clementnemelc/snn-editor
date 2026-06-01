@@ -17625,6 +17625,11 @@ function Af() {
                     })
                 })]
             })]
+        }), i.jsx(CaseLibraryModal, {
+            open: caseOpen,
+            onClose: () => setCaseOpen(!1),
+            onSelect: loadPresetModel,
+            lang: ht
         }), i.jsx(_f, {
             open: he,
             onClose: () => se(!1),
