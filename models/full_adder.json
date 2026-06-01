@@ -1,0 +1,187 @@
+{
+    "metadata": {
+        "name": "Full_Adder_Evolved",
+        "layers_count": 3,
+        "nodes_count": 7,
+        "synapses_count": 14
+    },
+    "nodes": [
+        {
+            "id": "L0_0",
+            "label": "Input_0_A",
+            "layer": 0,
+            "index": 0,
+            "type": "input",
+            "excitatory": true,
+            "threshold": 0.5
+        },
+        {
+            "id": "L0_1",
+            "label": "Input_1_B",
+            "layer": 0,
+            "index": 1,
+            "type": "input",
+            "excitatory": true,
+            "threshold": 0.5
+        },
+        {
+            "id": "L0_2",
+            "label": "Input_2_Cin",
+            "layer": 0,
+            "index": 2,
+            "type": "input",
+            "excitatory": true,
+            "threshold": 0.5
+        },
+        {
+            "id": "L1_0",
+            "label": "Hid_Sum_Exc_0",
+            "layer": 1,
+            "index": 0,
+            "type": "hidden",
+            "excitatory": true,
+            "threshold": 0.5
+        },
+        {
+            "id": "L1_1",
+            "label": "Hid_Sum_Inh_1",
+            "layer": 1,
+            "index": 1,
+            "type": "hidden",
+            "excitatory": false,
+            "threshold": 0.8
+        },
+        {
+            "id": "L2_0",
+            "label": "Output_0_Sum",
+            "layer": 2,
+            "index": 0,
+            "type": "output",
+            "excitatory": true,
+            "threshold": 0.5
+        },
+        {
+            "id": "L2_1",
+            "label": "Output_1_Cout",
+            "layer": 2,
+            "index": 1,
+            "type": "output",
+            "excitatory": true,
+            "threshold": 0.5
+        }
+    ],
+    "edges": [
+        {
+            "id": "e_L0_0_to_L2_0",
+            "source": "L0_0",
+            "target": "L2_0",
+            "weight": 0.7,
+            "delay": 2,
+            "sign": 1
+        },
+        {
+            "id": "e_L0_0_to_L2_1",
+            "source": "L0_0",
+            "target": "L2_1",
+            "weight": 0.41,
+            "delay": 2,
+            "sign": 1
+        },
+        {
+            "id": "e_L0_1_to_L2_0",
+            "source": "L0_1",
+            "target": "L2_0",
+            "weight": 0.38,
+            "delay": 2,
+            "sign": 1
+        },
+        {
+            "id": "e_L0_1_to_L2_1",
+            "source": "L0_1",
+            "target": "L2_1",
+            "weight": 0.43,
+            "delay": 2,
+            "sign": 1
+        },
+        {
+            "id": "e_L0_2_to_L2_0",
+            "source": "L0_2",
+            "target": "L2_0",
+            "weight": 0.68,
+            "delay": 2,
+            "sign": 1
+        },
+        {
+            "id": "e_L0_2_to_L2_1",
+            "source": "L0_2",
+            "target": "L2_1",
+            "weight": 0.42,
+            "delay": 2,
+            "sign": 1
+        },
+        {
+            "id": "e_L0_0_to_L1_0",
+            "source": "L0_0",
+            "target": "L1_0",
+            "weight": 0.69,
+            "delay": 1,
+            "sign": 1
+        },
+        {
+            "id": "e_L0_1_to_L1_0",
+            "source": "L0_1",
+            "target": "L1_0",
+            "weight": 0.52,
+            "delay": 1,
+            "sign": 1
+        },
+        {
+            "id": "e_L0_2_to_L1_0",
+            "source": "L0_2",
+            "target": "L1_0",
+            "weight": 0.7,
+            "delay": 1,
+            "sign": 1
+        },
+        {
+            "id": "e_L1_0_to_L2_0",
+            "source": "L1_0",
+            "target": "L2_0",
+            "weight": 0.88,
+            "delay": 1,
+            "sign": 1
+        },
+        {
+            "id": "e_L0_0_to_L1_1",
+            "source": "L0_0",
+            "target": "L1_1",
+            "weight": 0.65,
+            "delay": 1,
+            "sign": 1
+        },
+        {
+            "id": "e_L0_1_to_L1_1",
+            "source": "L0_1",
+            "target": "L1_1",
+            "weight": 0.65,
+            "delay": 1,
+            "sign": 1
+        },
+        {
+            "id": "e_L0_2_to_L1_1",
+            "source": "L0_2",
+            "target": "L1_1",
+            "weight": 0.5,
+            "delay": 1,
+            "sign": 1
+        },
+        {
+            "id": "e_L1_1_to_L2_0",
+            "source": "L1_1",
+            "target": "L2_0",
+            "weight": 1.8861,
+            "delay": 1,
+            "sign": -1
+        }
+    ]
+}
