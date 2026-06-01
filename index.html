@@ -2007,7 +2007,7 @@ function lf() {
             preventDefault: function() {
                 this.defaultPrevented = !0;
                 var n = this.nativeEvent;
-                n && (n.preventDefault ? n.preventDefault() : typeof n.returnValue != "unknown" && (n.returnValue = !1), this.isDefaultPrevented = Ql)
+                if (n) { try { if (n.preventDefault) n.preventDefault(); else if (typeof n.returnValue != "unknown") n.returnValue = !1; } catch (e) { console.warn("preventDefault warning in passive listener:", e); } this.isDefaultPrevented = Ql; }
             },
             stopPropagation: function() {
                 var n = this.nativeEvent;
@@ -7657,8 +7657,9 @@ function mf({
                 y: N,
                 dominantBaseline: "central",
                 textAnchor: "start",
-                fill: "rgba(255,255,255,0.22)",
-                fontSize: 11,
+                fill: "rgba(255,255,255,0.75)",
+                fontSize: 13,
+                fontWeight: "bold",
                 fontFamily: "Inter, sans-serif",
                 letterSpacing: 1,
                 children: ["L", L]
