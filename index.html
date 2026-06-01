@@ -8499,10 +8499,10 @@ loadCaseLibrary();
 
 // --- SNN CASE LIBRARY MODAL COMPONENT ---
 function CaseLibraryModal({ open, onClose, onSelect, lang }) {
-    const [cases, setCases] = React.useState([]);
-    const [loading, setLoading] = React.useState(false);
+    const [cases, setCases] = _.useState([]);
+    const [loading, setLoading] = _.useState(false);
 
-    React.useEffect(() => {
+    _.useEffect(() => {
         if (!open) return;
         setLoading(true);
         fetch('https://api.github.com/repos/clementnemelc/snn-editor/contents/models')
