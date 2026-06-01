@@ -15230,10 +15230,6 @@ function CaseLibraryModal({ open, onClose, onSelect, lang }) {
                             })
                         ]
                     }),
-                    i.jsx("p", {
-                        className: "text-xs text-muted-foreground",
-                        children: isZh ? "選擇並載入內建的 SNN 演化範例模型。這會覆蓋目前的畫布結構。" : "Select and load a pre-trained SNN example model. This will overwrite the current canvas structure."
-                    }),
                     i.jsx("div", {
                         className: "flex-1 overflow-y-auto pr-1 space-y-3 max-h-[350px] scrollbar-thin",
                         children: CASES.map(c => i.jsxs("div", {
@@ -15249,10 +15245,6 @@ function CaseLibraryModal({ open, onClose, onSelect, lang }) {
                                         i.jsx("span", {
                                             className: "text-xs font-bold text-foreground group-hover:text-[hsl(var(--primary))] transition-colors uppercase tracking-wide",
                                             children: c.id.replace("_", " ")
-                                        }),
-                                        i.jsx("span", {
-                                            className: "px-2 py-0.5 rounded-full text-[9px] font-medium case-badge",
-                                            children: c.model.metadata.name
                                         })
                                     ]
                                 }),
